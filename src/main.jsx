@@ -12,6 +12,9 @@ import Articles from './Discover/TravelarStories/Articles/Articles.jsx'
 import TravelerGuide from './Discover/TravelerGuide/TravelerGuide.jsx'
 import GuideDetails from './Discover/TravelerGuide/GuideDetails.jsx'
 import SearchResult from './SearchResult/SearchResult.jsx'
+import ContactDetails from './Payment/ContactDetails/ContactDetails.jsx'
+import ActivityDetails from './Payment/ActivityDetails/ActivityDetails.jsx'
+import SearchResultDetails from './SearchResult/SearchResultDetails.jsx'
 
 const router = createBrowserRouter([
   {
@@ -37,6 +40,19 @@ const router = createBrowserRouter([
   {
     path: "searchResult",
     element: <SearchResult/>
+  },
+  {
+    path: "contactDetails",
+    element: <ContactDetails/>
+  },
+  {
+    path: "activityDetails",
+    element: <ActivityDetails/>
+  },
+  {
+    path: "searchResult/:id",
+    element: <SearchResultDetails/>,
+    loader: ({params}) => fetch(`http://localhost:5000/searchResult/${params.id}`)
   },
 ]);
 
