@@ -5,7 +5,7 @@ const SearchResultDetails = () => {
   console.log(single)
   return (
     <div>
-      <h1>Details</h1>
+      <h1>{single?.title}</h1>
     </div>
   );
 };

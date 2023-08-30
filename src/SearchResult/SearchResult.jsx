@@ -3,11 +3,20 @@ import Rating from "react-rating";
 import { FaCircle, FaCircleNotch } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const SearchResult = () => {
   const searchData = useSelector((state) => state.searchData.data);
   const searchText = useSelector((state) => state.searchData.searchText);
-  console.log(searchData)
+  // console.log(searchData)
+  const [currentPage, setCurrentPage] = useState(0)
+  console.log(currentPage)
+  const totalSearchData = searchData.length
+  console.log(totalSearchData)
+  const dataPerPages = 5;
+  const totalPages = Math.ceil(totalSearchData / dataPerPages)
+  const pageNumbers = [...Array(totalPages).keys()]
+
   return (
     <div className="bg-base-300 pt-12">
         <div className="md:w-[80%] w-full bg-base-100 rounded-tl-lg rounded-tr-lg">
@@ -15,7 +24,7 @@ const SearchResult = () => {
             <h4 className="text-xl font-semibold">Search results matching "{searchText}"</h4>
           </div>
           {
-            searchData.map(data => <div key={data._id} className=" hover:shadow-2xl  w-full border flex items-center ">
+            searchData.slice(currentPage * dataPerPages, (currentPage + 1) * dataPerPages).map(data => <div key={data._id} className=" hover:shadow-2xl  w-full border flex items-center ">
             <figure className="  md:p-5 p-3">
               <Link to={`/searchResult/${data._id}`}> <img
                 className="md:w-[210px] sm:w-[200px] w-[190px] md:h-[150px] sm:h-[140px] h-[130px] rounded-[2px] "
@@ -51,6 +60,11 @@ const SearchResult = () => {
           </div>)
           }
           
+        </div>
+        <div className="flex justify-center gap-2 mb-12">
+          {
+            pageNumbers.map(number =>  <button key={number} onClick={()=>setCurrentPage(number)} className={`${currentPage === number ? "bg-green-600 py-2  px-4 rounded-full font-semibold  border-2 text-white border-teal-600 bg-teal-600" : " px-4 rounded-full font-semibold  py-2 border-2 border-teal-600"}`}>{number}</button>)
+          }
         </div>
     </div>
   );
